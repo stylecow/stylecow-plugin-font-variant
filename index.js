@@ -41,14 +41,20 @@ let properties = {
     "font-kerning": {
         "normal":                     ["'kern'"],
         "none":                       ["'kern' off"]
+    },
+
+    "font-variant": {
+        "normal":                      ["normal"],
+        "inherit":                     ["inherit"],
+        "initial":                     ["initial"]
     }
 };
 
-let fontVariant = {};
-
 for (let props in properties) {
     for (let prop in properties[props]) {
-        fontVariant[prop] = properties[props][prop];
+        if (!properties["font-variant"][prop]) {
+            properties["font-variant"][prop] = properties[props][prop];
+        }
     }
 }
 
@@ -62,45 +68,25 @@ module.exports = function (tasks, stylecow) {
         fn: function (declaration) {
             declaration
                 .getAll('Keyword')
-                .forEach(keyword => addFontFeatureSettings(declaration, properties[declaration.name][keyword.name]));
-        }
-    });
-
-    tasks.addTask({
-        filter: {
-            type: 'Declaration',
-            name: 'font-variant'
-        },
-        fn: function (declaration) {
-            declaration
-                .getAll('Keyword')
                 .forEach(function (keyword) {
-                    if (keyword.name === 'normal' || keyword.name === 'inherit') {
-                        return getFontFeatureSetting(declaration).empty().pushCode(keyword.name, 'Value');
-                    }
+                    let values = properties[declaration.name][keyword.name];
 
-                    addFontFeatureSettings(declaration, fontVariant[keyword.name]);
+                    if (values) {
+                        let fontFeatureSetting = declaration.getSibling({type: 'Declaration', name: 'font-feature-settings'});
+
+                        if (!fontFeatureSetting) {
+                            declaration.before(fontFeatureSetting = (new stylecow.Declaration()).setName('font-feature-settings'));
+                        }
+
+                        values.forEach(function (value) {
+                            if (value === 'normal' || value === 'inherit' || value === 'initial') {
+                                fontFeatureSetting.empty();
+                            }
+
+                            fontFeatureSetting.pushCode(value, 'Value');
+                        });
+                    }
                 });
         }
     });
-
-    function getFontFeatureSetting (declaration) {
-        let fontFeatureSetting = declaration.getSibling({type: 'Declaration', name: 'font-feature-settings'});
-
-        if (!fontFeatureSetting) {
-            fontFeatureSetting = (new stylecow.Declaration()).setName('font-feature-settings');
-            declaration.before(fontFeatureSetting);
-        }
-
-        return fontFeatureSetting;
-    }
-
-    function addFontFeatureSettings (declaration, values) {
-        if (!values) {
-            return;
-        }
-
-        let fontFeatureSetting = getFontFeatureSetting(declaration);
-        values.forEach(value => fontFeatureSetting.pushCode(value, 'Value'));
-    }
 };
