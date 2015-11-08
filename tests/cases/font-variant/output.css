@@ -1,0 +1,29 @@
+div {
+	font-feature-settings: "tnum", "smcp", "c2sc";
+	font-variant-numeric: tabular-nums;
+	font-variant-caps: all-small-caps;
+}
+div {
+	font-feature-settings: normal;
+	font-variant: normal;
+}
+div {
+	font-feature-settings: inherit;
+	font-variant: inherit;
+}
+div {
+	font-feature-settings: "smcp", "c2sc", "onum";
+	font-variant: all-small-caps oldstyle-nums;
+}
+div {
+	font-feature-settings: "onum", "smcp", "c2sc";
+	font-variant: all-small-caps;
+}
+div {
+	font-feature-settings: "subs" off, "sups" off;
+	font-variant-position: normal;
+}
+div {
+	font-feature-settings: "kern";
+	font-kerning: normal;
+}

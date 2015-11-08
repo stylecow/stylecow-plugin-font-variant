@@ -1,0 +1,23 @@
+div {
+  font-variant-numeric: tabular-nums;
+  font-variant-caps: all-small-caps;
+}
+div {
+  font-variant: normal;
+}
+div {
+  font-variant: inherit;
+}
+div {
+  font-variant: all-small-caps oldstyle-nums;
+}
+div {
+  font-feature-settings: "onum";
+  font-variant: all-small-caps;
+}
+div {
+  font-variant-position: normal;
+}
+div {
+  font-kerning: normal;
+}

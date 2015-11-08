@@ -1,0 +1,24 @@
+{
+  "name": "stylecow-plugin-font-variant",
+  "description": "Stylecow plugin to support font-variant properties",
+  "version": "1.0.0",
+  "engines": {
+    "node": ">=4.0"
+  },
+  "author": "Oscar Otero <oom@oscarotero.com>",
+  "homepage": "https://github.com/stylecow/stylecow-plugin-font-variant",
+  "bugs": "https://github.com/stylecow/stylecow-plugin-font-variant/issues",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/stylecow/stylecow-plugin-font-variant.git"
+  },
+  "devDependencies": {
+    "mocha": "^2.3.3",
+    "stylecow-core": "^2.1.1"
+  },
+  "scripts": {
+    "test": "mocha tests/cases.js"
+  },
+  "main": "index.js",
+  "license": "MIT"
+}
